@@ -1,0 +1,32 @@
+{
+    "classes": [
+        {
+            "id": 1,
+            "subject": "data structures",
+            "professor": "dr.yuvarj",
+            "timing": "10:00 AM - 11:30 AM",
+            "room": "A101",
+            "created_date": "2026-07-04"
+        }
+    ],
+    "assignments": [
+        {
+            "id": 1,
+            "subject": "Data Structures",
+            "assignment": "Implement Binary Search Tree",
+            "deadline": "2024-01-20",
+            "completed": false,
+            "created_date": "2026-07-04"
+        }
+    ],
+    "marks": [
+        {
+            "id": 1,
+            "subject": "Data Structures",
+            "marks": 85.0,
+            "total_marks": 100.0,
+            "percentage": 85.0,
+            "date": "2026-07-04"
+        }
+    ]
+}
