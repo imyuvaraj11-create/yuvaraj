@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Classes - Campus Buddy{% endblock %}
+
+{% block content %}
+<h2>📚 Your Classes</h2>
+
+<div style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 30px;">
+    <h3 style="color: #856404; margin-bottom: 10px;">➕ Add New Class</h3>
+    <form method="POST" action="{{ url_for('add_class') }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div class="form-group">
+                <label>Subject Name *</label>
+                <input type="text" name="subject" required placeholder="e.g., Data Structures">
+            </div>
+            <div class="form-group">
+                <label>Professor Name *</label>
+                <input type="text" name="professor" required placeholder="e.g., Dr. Kumar">
+            </div>
+            <div class="form-group">
+                <label>Class Timing *</label>
+                <input type="text" name="timing" required placeholder="e.g., 10:00 AM - 11:30 AM">
+            </div>
+            <div class="form-group">
+                <label>Room Number *</label>
+                <input type="text" name="room" required placeholder="e.g., A101">
+            </div>
+        </div>
+        <button type="submit" class="btn">✅ Add Class</button>
+    </form>
+</div>
+
+{% if classes %}
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Professor</th>
+                <th>Timing</th>
+                <th>Room</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cls in classes %}
+            <tr>
+                <td><strong>{{ cls.subject }}</strong></td>
+                <td>{{ cls.professor }}</td>
+                <td>{{ cls.timing }}</td>
+                <td>{{ cls.room }}</td>
+                <td>
+                    <a href="{{ url_for('delete_class', class_id=cls.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="empty-state">
+        <h2>📚 No classes yet!</h2>
+        <p>Add your first class above to get started.</p>
+    </div>
+{% endif %}
+{% endblock %}

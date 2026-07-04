@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Campus Buddy{% endblock %}
+
+{% block content %}
+<h2>Welcome to Campus Buddy! 🎓</h2>
+<p style="font-size: 1.1em; color: #666; margin: 20px 0;">Your personal college management system. Manage classes, track assignments, record marks, and calculate your GPA!</p>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>{{ classes_count }}</h3>
+        <p>Classes</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ assignments_count }}</h3>
+        <p>Assignments</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ marks_count }}</h3>
+        <p>Marks Recorded</p>
+    </div>
+</div>
+
+<h3 style="margin-top: 40px; margin-bottom: 20px;">✨ Features</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+    <div class="card">
+        <h3>📚 Class Management</h3>
+        <p>Add and manage your classes with professor details and timing information.</p>
+        <a href="{{ url_for('classes') }}" class="btn">Go to Classes</a>
+    </div>
+    
+    <div class="card">
+        <h3>📝 Assignment Tracking</h3>
+        <p>Keep track of all your assignments and their deadlines. Mark them as complete!</p>
+        <a href="{{ url_for('assignments') }}" class="btn">Go to Assignments</a>
+    </div>
+    
+    <div class="card">
+        <h3>📊 Marks & GPA</h3>
+        <p>Record your marks and automatically calculate your GPA and overall performance.</p>
+        <a href="{{ url_for('marks') }}" class="btn">Go to Marks</a>
+    </div>
+    
+    <div class="card">
+        <h3>📈 Dashboard</h3>
+        <p>View your overall statistics, progress, and academic performance at a glance.</p>
+        <a href="{{ url_for('dashboard') }}" class="btn">Go to Dashboard</a>
+    </div>
+</div>
+
+<div style="background: #e7f3ff; border-left: 4px solid #667eea; padding: 20px; margin-top: 40px; border-radius: 8px;">
+    <h3 style="color: #667eea;">💡 Quick Tips</h3>
+    <ul style="margin-left: 20px; color: #333; line-height: 1.8;">
+        <li>Start by adding your classes and their timings</li>
+        <li>Add assignments as soon as they're given with deadlines</li>
+        <li>Record your marks after every exam or assessment</li>
+        <li>Check your dashboard to see your academic progress</li>
+        <li>Use the search feature to find specific items quickly</li>
+    </ul>
+</div>
+{% endblock %}

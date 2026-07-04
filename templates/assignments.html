@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Assignments - Campus Buddy{% endblock %}
+
+{% block content %}
+<h2>📝 Your Assignments</h2>
+
+<div style="background: #d1ecf1; border: 1px solid #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 30px;">
+    <h3 style="color: #0c5460; margin-bottom: 10px;">➕ Add New Assignment</h3>
+    <form method="POST" action="{{ url_for('add_assignment') }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div class="form-group">
+                <label>Subject Name *</label>
+                <input type="text" name="subject" required placeholder="e.g., Data Structures">
+            </div>
+            <div class="form-group">
+                <label>Assignment Description *</label>
+                <input type="text" name="assignment" required placeholder="e.g., Implement Binary Search Tree">
+            </div>
+            <div class="form-group">
+                <label>Deadline (YYYY-MM-DD) *</label>
+                <input type="date" name="deadline" required>
+            </div>
+        </div>
+        <button type="submit" class="btn">✅ Add Assignment</button>
+    </form>
+</div>
+
+{% if assignments %}
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Assignment</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asg in assignments %}
+            <tr>
+                <td><strong>{{ asg.subject }}</strong></td>
+                <td>{{ asg.assignment }}</td>
+                <td>{{ asg.deadline }}</td>
+                <td>
+                    {% if asg.completed %}
+                        <span class="badge badge-success">✅ Completed</span>
+                    {% else %}
+                        <span class="badge badge-warning">⏳ Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not asg.completed %}
+                        <a href="{{ url_for('complete_assignment', asg_id=asg.id) }}" class="btn btn-success">✓ Mark Done</a>
+                    {% endif %}
+                    <a href="{{ url_for('delete_assignment', asg_id=asg.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="empty-state">
+        <h2>📝 No assignments yet!</h2>
+        <p>Add your first assignment above to get started.</p>
+    </div>
+{% endif %}
+{% endblock %}

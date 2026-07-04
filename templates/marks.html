@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Marks - Campus Buddy{% endblock %}
+
+{% block content %}
+<h2>📈 Your Marks</h2>
+
+<div style="background: #d4edda; border: 1px solid #28a745; padding: 15px; border-radius: 8px; margin-bottom: 30px;">
+    <h3 style="color: #155724; margin-bottom: 10px;">➕ Add New Marks</h3>
+    <form method="POST" action="{{ url_for('add_marks') }}">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div class="form-group">
+                <label>Subject Name *</label>
+                <input type="text" name="subject" required placeholder="e.g., Data Structures">
+            </div>
+            <div class="form-group">
+                <label>Marks Obtained *</label>
+                <input type="number" name="marks" step="0.01" required placeholder="e.g., 85">
+            </div>
+            <div class="form-group">
+                <label>Total Marks *</label>
+                <input type="number" name="total_marks" step="0.01" required placeholder="e.g., 100">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">✅ Add Marks</button>
+    </form>
+</div>
+
+{% if marks %}
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in marks %}
+            <tr>
+                <td><strong>{{ mark.subject }}</strong></td>
+                <td>{{ mark.marks }}/{{ mark.total_marks }}</td>
+                <td>
+                    <strong>{{ "%.2f"|format(mark.percentage) }}%</strong>
+                    {% if mark.percentage >= 90 %}
+                        <span class="badge badge-success">A+</span>
+                    {% elif mark.percentage >= 80 %}
+                        <span class="badge badge-success">A</span>
+                    {% elif mark.percentage >= 70 %}
+                        <span class="badge badge-primary">B</span>
+                    {% elif mark.percentage >= 60 %}
+                        <span class="badge badge-warning">C</span>
+                    {% else %}
+                        <span class="badge badge-danger">D</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if mark.percentage >= 90 %}
+                        A+
+                    {% elif mark.percentage >= 80 %}
+                        A
+                    {% elif mark.percentage >= 70 %}
+                        B
+                    {% elif mark.percentage >= 60 %}
+                        C
+                    {% else %}
+                        D
+                    {% endif %}
+                </td>
+                <td>{{ mark.date }}</td>
+                <td>
+                    <a href="{{ url_for('delete_marks', mark_id=mark.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="empty-state">
+        <h2>📈 No marks yet!</h2>
+        <p>Add your first marks above to get started.</p>
+    </div>
+{% endif %}
+{% endblock %}

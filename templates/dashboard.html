@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Campus Buddy{% endblock %}
+
+{% block content %}
+<h2>📊 Your Academic Dashboard</h2>
+
+<div class="stats">
+    <div class="stat-card">
+        <h3>{{ classes_count }}</h3>
+        <p>📚 Classes</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ completed_assignments }}/{{ assignments_count }}</h3>
+        <p>📝 Assignments Done</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ marks_count }}</h3>
+        <p>📈 Subjects Marked</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ "%.2f"|format(gpa) }}</h3>
+        <p>🎓 GPA (4.0 scale)</p>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 40px 0;">
+    <div class="card">
+        <h3>📊 Overall Statistics</h3>
+        <p><strong>Average Percentage:</strong> {{ "%.2f"|format(avg_percentage) }}%</p>
+        <p><strong>GPA:</strong> {{ "%.2f"|format(gpa) }}</p>
+        <p><strong>Overall Grade:</strong> <span class="badge badge-primary">{{ grade }}</span></p>
+    </div>
+    
+    <div class="card">
+        <h3>✅ Assignment Progress</h3>
+        <p><strong>Total:</strong> {{ assignments_count }}</p>
+        <p><strong>Completed:</strong> {{ completed_assignments }}</p>
+        <p><strong>Pending:</strong> {{ pending_assignments }}</p>
+        {% if assignments_count > 0 %}
+            <p><strong>Completion Rate:</strong> {{ "%.1f"|format((completed_assignments/assignments_count)*100) }}%</p>
+        {% endif %}
+    </div>
+</div>
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-top: 40px;">
+    <h3 style="margin-bottom: 15px;">🎯 Grade Interpretation</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <p><strong>A+ (90-100%)</strong> - Excellent</p>
+            <p><strong>A (80-89%)</strong> - Very Good</p>
+            <p><strong>B (70-79%)</strong> - Good</p>
+            <p><strong>C (60-69%)</strong> - Satisfactory</p>
+            <p><strong>D (Below 60%)</strong> - Needs Improvement</p>
+        </div>
+        <div>
+            <p><strong>Current Grade: {{ grade }}</strong></p>
+            <p><strong>Current Percentage: {{ "%.2f"|format(avg_percentage) }}%</strong></p>
+            <p><strong>Current GPA: {{ "%.2f"|format(gpa) }}</strong></p>
+        </div>
+    </div>
+</div>
+
+<div style="background: #e7f3ff; border-left: 4px solid #667eea; padding: 20px; margin-top: 40px; border-radius: 8px;">
+    <h3 style="color: #667eea; margin-bottom: 15px;">💡 Academic Tips</h3>
+    <ul style="margin-left: 20px; color: #333; line-height: 1.8;">
+        {% if pending_assignments > 0 %}
+            <li>You have {{ pending_assignments }} pending assignment(s). Don't forget to complete them!</li>
+        {% else %}
+            <li>Great! You've completed all your assignments! 🎉</li>
+        {% endif %}
+        
+        {% if avg_percentage >= 90 %}
+            <li>Excellent performance! Keep up the great work!</li>
+        {% elif avg_percentage >= 80 %}
+            <li>Very good performance! Aim for higher marks in upcoming exams.</li>
+        {% elif avg_percentage >= 70 %}
+            <li>Good performance! Try to improve your marks in weak subjects.</li>
+        {% elif avg_percentage > 0 %}
+            <li>You need to focus more on your studies. Don't give up!</li>
+        {% else %}
+            <li>Start recording your marks to see your progress.</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
